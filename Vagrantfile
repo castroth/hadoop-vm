@@ -1,17 +1,15 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-
 use_proxy = false
-# use_proxy = true
-# use_proxy = ENV['use_proxy'].to_s == 'false' ? false : true  if ENV['use_proxy']
-# url_proxy = ENV['http_proxy'] || 'http://web-proxy.corp.hp.com:8080'
-# not_proxy = 'localhost,127.0.0.1,.hpicorp.net,15.0.0.0/8,16.0.0.0/8'
+use_proxy = ENV['use_proxy'].to_s == 'true' ? true : false  if ENV['use_proxy']
+url_proxy = ENV['http_proxy'] || 'http://web-proxy.corp.hp.com:8080'
+not_proxy = 'localhost,127.0.0.1,.hpicorp.net,15.0.0.0/8,16.0.0.0/8'
 
 private_key = File.expand_path(File.join(Dir.home, '.ssh/id_rsa'))
 public_key = File.expand_path(File.join(Dir.home, '.ssh/id_rsa.pub'))
 
-
+extra_mappings = ENV['extra_mappings'] ? ENV['extra_mappings'].split('|') : Array.new
 # All Vagrant configuration is done below. The "2" in Vagrant.configure
 # configures the configuration version (we support older styles for
 # backwards compatibility). Please don't change it unless you know what
@@ -81,16 +79,4 @@ Vagrant.configure("2") do |config|
    vb.memory = "4608"
  end
 
-
-  #
-  # View the documentation for the provider you are using for more
-  # information on available options.
-
-  # Enable provisioning with a shell script. Additional provisioners such as
-  # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
-  # documentation for more information about their specific syntax and use.
-  # config.vm.provision "shell", inline: <<-SHELL
-  #   apt-get update
-  #   apt-get install -y apache2
-  # SHELL
 end
