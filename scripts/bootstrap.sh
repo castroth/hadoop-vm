@@ -69,3 +69,20 @@ sudo -u hdfs $HADOOP_HOME/bin/hadoop fs -mkdir -p /user/$USER
 sudo -u hdfs $HADOOP_HOME/bin/hadoop fs -chown $USER:$USER /user/$USER
 sudo -u hdfs $HADOOP_HOME/bin/hadoop fs -mkdir /tmp
 sudo -u hdfs $HADOOP_HOME/bin/hadoop fs -chmod 777 /tmp
+
+echo 'export  JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64' >> /home/vagrant/.bashrc
+echo 'export  HADOOP_HOME=/usr/share/hadoop' >> /home/vagrant/.bashrc
+
+cat << EOF >> /home/vagrant/.bashrc
+function startHadoop() {
+  echo "Stating Hadoop Cluster"
+
+  echo -e "\tInit daemons NameNode and DataNode (HDFS):"
+  sudo -u hdfs $HADOOP_HOME/sbin/hadoop-daemon.sh start namenode
+  sudo -u hdfs $HADOOP_HOME/sbin/hadoop-daemon.sh start datanode
+
+  echo -e "\tInit daemons ResourceManager and NodeManager (YARN):"
+  sudo -u yarn $HADOOP_HOME/sbin/yarn-daemon.sh start resourcemanager
+  sudo -u yarn $HADOOP_HOME/sbin/yarn-daemon.sh start nodemanager
+}
+EOF

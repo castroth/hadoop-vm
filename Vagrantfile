@@ -18,6 +18,7 @@ Vagrant.configure("2") do |config|
   # Proxy configuration:
   #
   if use_proxy
+    puts 'INFO: Configuring proxy for the VM.'
     if Vagrant.has_plugin?('vagrant-proxyconf')
       config.proxy.http     = url_proxy
       config.proxy.https    = url_proxy
